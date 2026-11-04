@@ -15,9 +15,23 @@ The workflow below was reconstructed from ten Colab notebooks, the model experim
 
 ## Data and prediction timing
 
-The target is `100 × (ending valuation − starting valuation) / starting valuation`. Each row represents an interval for one player. The source code collects matches through the interval's closing date. A deployment would need a defined scoring time and a check that each match and league statistic was available at that time.
+The target is `100 × (ending valuation − starting valuation) / starting valuation`. Each row represents an interval for one player. The later-season notebook collects appearances from the previous valuation date through the current valuation date. The early historical builder uses the current and next dates for its appearance window and takes the previous valuation with a separate shift. The exact alignment of features and target in the final historical export needs validation against intermediate rows before interpreting the experiment as a forecast at a specified time.
 
 The historical source archive contains player valuations, appearances, games, lineups, events, clubs, and competitions. The model feature export contains 122,615 rows across four position groups. The 33,665 attacker rows match the required columns in the historical prediction export after deriving the target, polynomial age features, and season order.
+
+## Historical experiments
+
+The capstone compared absolute and percentage targets, tuned CatBoost with Optuna and Random Forest with randomized search, and tested both clipping and excluding unusually large increases. Gaussian oversampling and an auxiliary classifier explored ways to improve predictions in the upper tail. The classifier missed all six positive cases in the later export and was dropped from the final feature set.
+
+| Evaluation reported in the presentation | Model | RMSE | MAE | R² |
+| --- | --- | ---: | ---: | ---: |
+| Historical split | Linear regression | 54.14 | 31.52 | 0.165 |
+| Historical split | Random Forest | 47.30 | 27.91 | 0.363 |
+| Historical split | CatBoost | 45.20 | 26.76 | 0.418 |
+| Later export with mixed seasons | Random Forest | 40.65 | 26.31 | 0.097 |
+| Later export with mixed seasons | CatBoost | 39.67 | 25.30 | 0.140 |
+
+The mixed export has 819 rows. The notebook's cutoff removes one 2023/24 row, yielding the 818 rows described in the presentation. The separate 2024/25-only evaluation is the primary result in the README.
 
 ## Evaluation protocol
 
