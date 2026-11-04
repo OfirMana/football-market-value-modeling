@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="792pt" height="162pt" viewBox="0 0 792 162" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 162 
+L 792 162 
+L 792 0 
+L 0 0 
+z
+" style="fill: #f4f7fb"/>
+  </g>
+  <g id="axes_1"/>
+  <g id="patch_2">
+   <path d="M 37.224 136.566 
+L 184.536 136.566 
+Q 200.376 136.566 200.376 133.326 
+L 200.376 64.314 
+Q 200.376 61.074 184.536 61.074 
+L 37.224 61.074 
+Q 21.384 61.074 21.384 64.314 
+L 21.384 133.326 
+Q 21.384 136.566 37.224 136.566 
+z
+" style="fill: #ffffff; stroke: #d3deea; stroke-linejoin: miter"/>
+  </g>
+  <g id="patch_3">
+   <path d="M 227.304 136.566 
+L 374.616 136.566 
+Q 390.456 136.566 390.456 133.326 
+L 390.456 64.314 
+Q 390.456 61.074 374.616 61.074 
+L 227.304 61.074 
+Q 211.464 61.074 211.464 64.314 
+L 211.464 133.326 
+Q 211.464 136.566 227.304 136.566 
+z
+" style="fill: #ffffff; stroke: #d3deea; stroke-linejoin: miter"/>
+  </g>
+  <g id="patch_4">
+   <path d="M 417.384 136.566 
+L 564.696 136.566 
+Q 580.536 136.566 580.536 133.326 
+L 580.536 64.314 
+Q 580.536 61.074 564.696 61.074 
+L 417.384 61.074 
+Q 401.544 61.074 401.544 64.314 
+L 401.544 133.326 
+Q 401.544 136.566 417.384 136.566 
+z
+" style="fill: #ffffff; stroke: #d3deea; stroke-linejoin: miter"/>
+  </g>
+  <g id="patch_5">
+   <path d="M 607.464 136.566 
+L 754.776 136.566 
+Q 770.616 136.566 770.616 133.326 
+L 770.616 64.314 
+Q 770.616 61.074 754.776 61.074 
+L 607.464 61.074 
+Q 591.624 61.074 591.624 64.314 
+L 591.624 133.326 
+Q 591.624 136.566 607.464 136.566 
+z
+" style="fill: #ffffff; stroke: #d3deea; stroke-linejoin: miter"/>
+  </g>
+  <g id="text_1">
+   <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263f" x="31.68" y="32.4" transform="rotate(-0 31.68 32.4)">From match records to model evaluation</text>
+  </g>
+  <g id="text_2">
+   <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="41.184" y="84.24" transform="rotate(-0 41.184 84.24)">01</text>
+  </g>
+  <g id="text_3">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263f" x="41.184" y="106.92" transform="rotate(-0 41.184 106.92)">Source tables</text>
+  </g>
+  <g id="text_4">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b6076" x="41.184" y="124.74" transform="rotate(-0 41.184 124.74)">Valuations + appearances</text>
+  </g>
+  <g id="text_5">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="202.752" y="104.49" transform="rotate(-0 202.752 104.49)">→</text>
+  </g>
+  <g id="text_6">
+   <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="231.264" y="84.24" transform="rotate(-0 231.264 84.24)">02</text>
+  </g>
+  <g id="text_7">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263f" x="231.264" y="106.92" transform="rotate(-0 231.264 106.92)">Player intervals</text>
+  </g>
+  <g id="text_8">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b6076" x="231.264" y="124.74" transform="rotate(-0 231.264 124.74)">Join and aggregate matches</text>
+  </g>
+  <g id="text_9">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="392.832" y="104.49" transform="rotate(-0 392.832 104.49)">→</text>
+  </g>
+  <g id="text_10">
+   <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="421.344" y="84.24" transform="rotate(-0 421.344 84.24)">03</text>
+  </g>
+  <g id="text_11">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263f" x="421.344" y="106.92" transform="rotate(-0 421.344 106.92)">Model features</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b6076" x="421.344" y="124.74" transform="rotate(-0 421.344 124.74)">122,615 interval samples</text>
+  </g>
+  <g id="text_13">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="582.912" y="104.49" transform="rotate(-0 582.912 104.49)">→</text>
+  </g>
+  <g id="text_14">
+   <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087d70" x="611.424" y="84.24" transform="rotate(-0 611.424 84.24)">04</text>
+  </g>
+  <g id="text_15">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263f" x="611.424" y="106.92" transform="rotate(-0 611.424 106.92)">Season holdout</text>
+  </g>
+  <g id="text_16">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b6076" x="611.424" y="124.74" transform="rotate(-0 611.424 124.74)">173 rows from 2024/25</text>
+  </g>
+ </g>
+</svg>
