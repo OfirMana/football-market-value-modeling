@@ -1,63 +1,65 @@
 # Football Market Value Modeling
 
-**How much does a footballer's market valuation change after a run of matches?**
+**How do you turn a football database into examples a model can learn from?**
 
-This Magshimim AI capstone turned historical Transfermarkt valuations, match records, and player appearances into **122,615 player-interval samples**. We engineered features to capture how a player's performance changed between intervals, then compared linear and tree-based regressors on attackers.
+For our Magshimim AI capstone, we designed a dataset around **one player and one valuation interval per row**. We assembled the rows from separate Transfermarkt tables for valuation updates, appearances, matches, players, and clubs. We then engineered features that describe how a player's performance changed between intervals and evaluated the regressors on a later season.
 
 ![Pipeline from valuation snapshots and match records through interval features and a later-season evaluation](assets/pipeline.svg)
 
-## From match records to a prediction
+## 1. Designing the dataset
 
-1. Pair consecutive valuation updates for each player and calculate the percentage change relative to the starting valuation.
-2. Join player profiles, appearances, and match records. Aggregate performance between valuation updates.
-3. Compare each interval with the player's previous interval. Features include changes in minutes per match, goals and assists per minute, and goals scored and conceded by the team per match.
-4. Combine the performance changes with age, the starting valuation, and league and season context. Compare linear baselines with Random Forest and CatBoost.
-5. Evaluate the model on a separate export of attacker samples covering 2023/24 and 2024/25.
+| Source archive | Records |
+| --- | ---: |
+| Player valuation updates | 473,675 |
+| Player appearances | 1,583,632 |
+| Matches | 68,322 |
+| Player profiles | 30,518 |
 
-The original data-building notebook includes matches through the end of the valuation interval. The current evaluation measures estimation after observing that interval's performances. A forecast issued at the start of the interval would require earlier features.
+The source tables record events at different levels and on different dates. A valuation update carries a player ID and price. An appearance carries a player ID, a match ID, and individual statistics. A match carries a score from the home and away teams' perspectives. We had to decide which records belonged together and what each training example should represent.
 
-## Results reported in the capstone
+1. **Build a timeline for each player.** Sort valuation updates by player and date. Use consecutive updates to define variable-length windows for collecting match data.
+2. **Attach appearances and match context.** Within each window, collect the player's appearances, look up the matches by ID, and attribute goals for and against using the club the player represented in each match.
+3. **Assemble and clean the modeling table.** Summarize playing time, goals, assists, cards, and team results into a single row. Check missing and implausible values, link clubs to domestic leagues, and retain player-level order for the next stage.
+4. **Define a comparable target.** Express the valuation change as a percentage of the starting valuation so the same euro change has a different meaning for players at different price levels.
 
-| Evaluation | Model | RMSE | MAE | R² |
-| --- | --- | ---: | ---: | ---: |
-| Historical split | Linear Regression | 54.14 | 31.52 | 0.165 |
-| Historical split | Random Forest | 47.30 | 27.91 | 0.363 |
-| Historical split | CatBoost | 45.20 | 26.76 | 0.418 |
-| Later export | Random Forest | 40.65 | 26.31 | 0.097 |
-| Later export | CatBoost | 39.67 | 25.30 | 0.140 |
+The resulting feature table had **122,615 rows across four position groups**, including **33,665 attacker rows**. The final modeling work focused on attackers, whose on-field contributions were better represented by the available statistics.
 
-RMSE and MAE are measured in percentage points. These figures come from the original capstone presentation. The supplied export has 646 rows from 2023/24 and 173 from 2024/25. The notebook's 650% target cutoff removes one 2023/24 row, yielding the reported total of 818. The historical training export also includes 2023/24.
+## 2. Engineering features from player histories
 
-## Experiments that shaped the final model
+We normalized totals by minutes played or appearances, then compared those rates with the same player's previous interval. This separates a change in scoring rate from a change in how often the player appeared.
 
-| Experiment | Decision |
+| Feature family | How we built it |
 | --- | --- |
-| Absolute vs. percentage change | Use percentage change so the target accounts for the player's starting valuation. |
-| Feature selection | Compare raw performance, changes from the previous interval, age transformations, and league and season context. |
-| Model tuning | Use Optuna for CatBoost and randomized search for Random Forest in the original experiments. |
-| Outlier handling | Compare clipping, excluding large increases, and keeping the full distribution. |
-| Rare increases | Test Gaussian oversampling and an auxiliary classifier. The classifier missed all six positive cases in the later export and was dropped from the final feature set. |
+| Playing time | Change in minutes per appearance from the previous interval. |
+| Attacking output | Changes in goals and assists per minute. We also tested a non-penalty goals rate. |
+| Team performance | Changes in goals scored and conceded per appearance, calculated from the player's club perspective. |
+| Player and market context | Age, age squared and cubed, starting valuation, league rank by season, and chronological season order. |
 
-## Evaluate the models on prepared data
+We also tested comparisons with peers in the **same season, league, and position**. That produced a second set of features measuring how far a player's rates were above or below the group average. The later-season evaluator uses the within-player changes and excludes both the target-derived season rank and the experimental outlier classifier.
+
+## 3. Main evaluation on the later season
+
+We trained on **33,555 historical attacker rows** after applying the original 650% upper cutoff to the training target. We evaluated on **all 173 attacker rows from 2024/25** in the supplied export, a season absent from training. The historical-mean baseline gives every test row the same prediction.
+
+| Model | MAE ↓ | RMSE ↓ | R² ↑ |
+| --- | ---: | ---: | ---: |
+| Historical mean | 26.16 | **41.15** | **−0.009** |
+| Linear regression | 29.99 | 44.57 | −0.184 |
+| Random Forest | 26.70 | 42.20 | −0.061 |
+| CatBoost | **25.71** | 41.36 | −0.020 |
+
+![2024/25 evaluation comparing CatBoost, Random Forest, linear regression, and the historical mean baseline on MAE and RMSE](assets/evaluation.svg)
+
+Errors are in percentage points. CatBoost had the lowest MAE, while the historical mean had the lowest RMSE and highest R². All models had negative R² on this season. The [full results](metrics.csv) include RidgeCV and LassoCV. The original historical experiments and mixed-season evaluation are in the [technical notes](project-audit.md).
+
+## Run the evaluation
 
 ```bash
 python -m pip install -r requirements.txt
 python evaluate.py data/for_model_nov3.csv data/Attackers_new_samples_for_model.csv --historical-feature-table --test-season-order 13
 ```
 
-The script trains on historical attackers with valuation changes of at most 650% and reports RMSE, MAE, and R² on the 173 rows encoded as season 13 (2024/25). It adds a mean baseline, fits preprocessing on historical rows, and excludes the outlier classifier's predictions and the target-derived season rank. CatBoost uses the hyperparameters listed in the original presentation. The feature exports must use the same chronological season encoding.
-
-The training input is the feature table produced by the EDA notebooks. The evaluator derives the percentage target, polynomial age features, and chronological season order. The resulting 33,665 attacker rows match the columns used for evaluation in the later historical export.
-
-### Results on 2024/25 only
-
-![2024/25 evaluation comparing CatBoost, Random Forest, linear regression, and the historical mean baseline on MAE and RMSE](assets/evaluation.svg)
-
-The filtered training table contains 33,555 rows. On the 173 later-season rows, CatBoost had a slightly lower MAE than the historical-mean baseline (25.71 vs. 26.16 percentage points). The mean baseline had a lower RMSE (41.15 vs. 41.36). Both models had negative R² on this split. See [metrics.csv](metrics.csv) for the full comparison.
-
-## Project notes
-
-The [technical notes](project-audit.md) trace the Colab workflow from the source archive to evaluation and explain what the current Python entry point reproduces. The original presentation metrics are recorded separately because the exact run configuration has not been verified.
+The command starts from the prepared feature exports. It derives the percentage target and age terms, selects the later-season rows, and writes the model metrics. The [technical notes](project-audit.md) map the original notebooks and intermediate files that produced the feature table and explain how the match window relates to the prediction time.
 
 ## Authors
 
