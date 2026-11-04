@@ -31,7 +31,7 @@ The capstone compared absolute and percentage targets, tuned CatBoost with Optun
 | Later export with mixed seasons | Random Forest | 40.65 | 26.31 | 0.097 |
 | Later export with mixed seasons | CatBoost | 39.67 | 25.30 | 0.140 |
 
-The mixed export has 819 rows. The notebook's cutoff removes one 2023/24 row, yielding the 818 rows described in the presentation. The separate 2024/25-only evaluation is the primary result in the README.
+The mixed export has 819 rows. The notebook's cutoff removes one 2023/24 row, yielding the 818 rows described in the presentation. The README leads with the original test split and reports the 2024/25-only evaluation separately.
 
 ## Evaluation protocol
 
