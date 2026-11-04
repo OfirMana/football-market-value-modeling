@@ -61,4 +61,4 @@ The [technical notes](project-audit.md) trace the Colab workflow from the source
 
 ## Authors
 
-**Ofir Mana** led the project and worked with **Noam Gamliel** throughout. They developed the dataset, made modeling decisions, and evaluated the results together as a Magshimim AI capstone team.
+**Ofir Mana** and **Noam Gamliel** completed this Magshimim AI capstone together as a two-person team. They jointly developed the dataset, designed the modeling experiments, and evaluated the results.
